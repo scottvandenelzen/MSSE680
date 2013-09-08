@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -50,6 +51,7 @@
     <Compile Include="Contact.cs">
       <DependentUpon>Model680.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository.cs" />
     <Compile Include="Model680.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
