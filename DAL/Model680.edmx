@@ -67,7 +67,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="scottModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="msse680Entities" p1:LazyLoadingEnabled="true">
+        <EntityContainer Name="scottEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="Contacts" EntityType="scottModel.Contact" />
           <EntitySet Name="Phones" EntityType="scottModel.Phone" />
           <AssociationSet Name="FK_Contact_Contact" Association="scottModel.FK_Contact_Contact">
@@ -133,7 +133,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="scottModelStoreContainer" CdmEntityContainer="msse680Entities">
+        <EntityContainerMapping StorageEntityContainer="scottModelStoreContainer" CdmEntityContainer="scottEntities">
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="scottModel.Contact">
               <MappingFragment StoreEntitySet="Contact">

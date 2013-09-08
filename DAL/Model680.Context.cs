@@ -13,10 +13,10 @@ namespace DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class msse680Entities : DbContext
+    public partial class scottEntities : DbContext
     {
-        public msse680Entities()
-            : base("name=msse680Entities")
+        public scottEntities()
+            : base("name=scottEntities")
         {
         }
     
