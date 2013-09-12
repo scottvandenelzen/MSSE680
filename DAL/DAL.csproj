@@ -51,6 +51,7 @@
     <Compile Include="Contact.cs">
       <DependentUpon>Model680.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extender.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Model680.Context.cs">
       <AutoGen>True</AutoGen>
