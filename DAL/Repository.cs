@@ -18,7 +18,8 @@ namespace DAL
     /// This is the Data Repository class
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DataRepository<T> : IDataRepository<T>, IDataRepository where T : class
+//    public class DataRepository<T> : IDataRepository<T>, IDataRepository where T : class
+    public class DataRepository<T> : IDataRepository where T : class
     {
         /// <summary>
         /// Data Context object to interact with the db
@@ -190,19 +191,7 @@ namespace DAL
         }
     }
 
-    /// <summary>
-    /// Generic interface
-    /// </summary>
-    /// <typeparam name="T">Type of entity</typeparam>
-    public interface IDataRepository<T> where T : class
-    {
-        IQueryable<T> GetAll();
-        void Insert(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        IQueryable<T> GetBySpecificKey(string KeyName, string KeyVal);
-        IQueryable<T> GetBySpecificKey(string KeyName, int KeyVal);
-    }
+    
     /// <summary>
     /// Generic interface
     /// </summary>

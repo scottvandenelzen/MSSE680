@@ -6,12 +6,4 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-   public partial class Contact
-   {
-       int foo()
-       {
-           // do something
-
-       }
-   }
 }
