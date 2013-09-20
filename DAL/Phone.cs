@@ -15,8 +15,8 @@ namespace DAL
     public partial class Phone
     {
         public int PhoneID { get; set; }
-        public Nullable<int> ContactID { get; set; }
-        public Nullable<int> PhoneType { get; set; }
+        public int ContactID { get; set; }
+        public int PhoneType { get; set; }
         public string PhoneNumber { get; set; }
     
         public virtual Contact Contact { get; set; }

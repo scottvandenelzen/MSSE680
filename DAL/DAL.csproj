@@ -47,11 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Contact.cs">
       <DependentUpon>Model680.tt</DependentUpon>
     </Compile>
-    <Compile Include="Extender.cs" />
+    <Compile Include="Phone.cs">
+      <DependentUpon>Model680.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="Model680.Context.cs">
       <AutoGen>True</AutoGen>
@@ -67,9 +68,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model680.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Phone.cs">
-      <DependentUpon>Model680.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

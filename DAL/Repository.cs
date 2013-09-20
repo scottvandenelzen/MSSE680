@@ -77,19 +77,18 @@ namespace DAL
             {
                 return null;
             }
-
         }
+
         /// <summary>
         /// This method is used to return a collection of objects
         /// by specific key i.e a column name and the
         /// specific value associated with the column
         /// </summary>
         /// <param name="KeyName">The name of the key</param>
-        /// <param name="KeyVal">The string value of the column</param>
+        /// <param name="KeyVal">The integer value of the column</param>
         /// <returns></returns>
-        public virtual IQueryable<T> GetBySpecificKey(string KeyName, string KeyVal)
+        public virtual IQueryable<T> GetBySpecificKey(string KeyName, int? KeyVal)
         {
-
             var itemParameter = Expression.Parameter(typeof(T), "item");
             var whereExpression = Expression.Lambda<Func<T, bool>>
                 (
@@ -110,7 +109,38 @@ namespace DAL
             {
                 return null;
             }
+        }
 
+        /// <summary>
+        /// This method is used to return a collection of objects
+        /// by specific key i.e a column name and the
+        /// specific value associated with the column
+        /// </summary>
+        /// <param name="KeyName">The name of the key</param>
+        /// <param name="KeyVal">The string value of the column</param>
+        /// <returns></returns>
+        public virtual IQueryable<T> GetBySpecificKey(string KeyName, string KeyVal)
+        {
+            var itemParameter = Expression.Parameter(typeof(T), "item");
+            var whereExpression = Expression.Lambda<Func<T, bool>>
+                (
+                Expression.Equal(
+                    Expression.Property(
+                        itemParameter,
+                       KeyName
+                        ),
+                    Expression.Constant(KeyVal)
+                    ),
+                new[] { itemParameter }
+                );
+            try
+            {
+                return GetAll().Where(whereExpression).AsQueryable();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

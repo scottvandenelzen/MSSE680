@@ -11,7 +11,9 @@ namespace DALUnitTest
     [TestClass]
     public class UnitTest1
     {
-
+        /// <summary>
+        /// unit test inserting using a repository
+        /// </summary>
         [TestMethod]
         public void InsertUsingRepository()
         {
@@ -26,8 +28,11 @@ namespace DALUnitTest
             myContact.ZipCode = "54301";
 
             contactRepo.Insert(myContact);
+
         }
 
+
+        // insert a phone into the repo
         [TestMethod]
         public void InsertPhoneUsingRepository()
         {
@@ -42,6 +47,9 @@ namespace DALUnitTest
         }
 
 
+        /// <summary>
+        /// retrieve data from the repo
+        /// </summary>
         [TestMethod]
         public void RetrieveUsingRepository()
         {
@@ -51,7 +59,65 @@ namespace DALUnitTest
             Assert.IsTrue(myList.Count > 0);
         }
 
+        /// <summary>
+        /// this test mehtod 
+        /// </summary>
+        [TestMethod]
+        public void UpdateRepository()
+        {
+            // load the list
+            var contactRepo = new DataRepository<Contact>();
+            List<Contact> myList = contactRepo.GetAll().ToList<Contact>();
 
+            // make a change and write it out
+            myList[0].FirstName = "Benjamin";
+            contactRepo.Update(myList[0]);
+
+            // reload the list after hte update
+            myList = contactRepo.GetAll().ToList<Contact>();
+
+            Assert.AreEqual(myList[0].FirstName,"Benjamin");
+
+
+        }
+
+
+        [TestMethod]
+        public void DeleteAllPeopleNamedScott()
+        {
+            // load the list of everyone named scott
+            var contactRepo = new DataRepository<Contact>();
+            List<Contact> myList = contactRepo.GetBySpecificKey("FirstName","Scott").ToList<Contact>();
+
+            var PhoneRepo = new DataRepository<Phone>();
+
+            // delete all the records in this list
+            for (int i = 0; i < myList.Count; ++i)
+            {
+                // get a list of phones for this contact
+                List<Phone> myPhones = PhoneRepo.GetBySpecificKey("ContactID", myList[i].ContactID).ToList<Phone>();
+
+                //delete the phones for this contact
+                for (int j = 0; j < myPhones.Count; ++j)
+                {
+                    PhoneRepo.Delete(myPhones[j]);
+                }
+
+                // now delete the contact
+                contactRepo.Delete(myList[i]);
+            }
+
+            // reload the list (should be empty now)
+            myList = contactRepo.GetBySpecificKey("FirstName","Scott").ToList<Contact>();
+
+            Assert.AreEqual(myList.Count, 0);
+
+
+        }
+
+        /// <summary>
+        ///  add a contact using the domain object and context
+        /// </summary>
         [TestMethod]
         public void AddContact()
         {
@@ -79,6 +145,9 @@ namespace DALUnitTest
             db.SaveChanges();
         }
 
+        /// <summary>
+        ///  delete a contact using the domain object and context
+        /// </summary>
         [TestMethod]
         public void DeleteContact()
         {
@@ -97,6 +166,7 @@ namespace DALUnitTest
             db.Contacts.Add(myContact);
             db.SaveChanges();
 
+            // use linq to find the object i want to delete
             Contact deleteContact = (from d in db.Contacts where d.FirstName == "DELETEME" select d).Single();
             db.Contacts.Remove(deleteContact);
             db.SaveChanges();
@@ -104,7 +174,10 @@ namespace DALUnitTest
         }
 
 
-        
+
+        /// <summary>
+        /// use link to find an object 
+        /// </summary>
         [TestMethod]
         public void LoadContact()
         {

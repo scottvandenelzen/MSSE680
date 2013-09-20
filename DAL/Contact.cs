@@ -27,8 +27,6 @@ namespace DAL
         public string State { get; set; }
         public string ZipCode { get; set; }
     
-        public virtual Contact Contact1 { get; set; }
-        public virtual Contact Contact2 { get; set; }
         public virtual ICollection<Phone> Phones { get; set; }
     }
 }

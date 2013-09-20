@@ -4,14 +4,10 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="scottModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="scottModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="scottModelStoreContainer">
           <EntitySet Name="Contact" EntityType="scottModel.Store.Contact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Phones" EntityType="scottModel.Store.Phones" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Contact_Contact" Association="scottModel.Store.FK_Contact_Contact">
-            <End Role="Contact" EntitySet="Contact" />
-            <End Role="Contact1" EntitySet="Contact" />
-          </AssociationSet>
           <AssociationSet Name="FK_Phones_Contact" Association="scottModel.Store.FK_Phones_Contact">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="Phones" EntitySet="Phones" />
@@ -22,8 +18,8 @@
             <PropertyRef Name="ContactID" />
           </Key>
           <Property Name="ContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="Lastname" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Lastname" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="100" />
           <Property Name="City" Type="varchar" MaxLength="50" />
           <Property Name="State" Type="varchar" MaxLength="2" />
@@ -34,24 +30,12 @@
             <PropertyRef Name="PhoneID" />
           </Key>
           <Property Name="PhoneID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ContactID" Type="int" />
-          <Property Name="PhoneType" Type="int" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="PhoneType" Type="int" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
         </EntityType>
-        <Association Name="FK_Contact_Contact">
-          <End Role="Contact" Type="scottModel.Store.Contact" Multiplicity="1" />
-          <End Role="Contact1" Type="scottModel.Store.Contact" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="ContactID" />
-            </Principal>
-            <Dependent Role="Contact1">
-              <PropertyRef Name="ContactID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Phones_Contact">
-          <End Role="Contact" Type="scottModel.Store.Contact" Multiplicity="0..1" />
+          <End Role="Contact" Type="scottModel.Store.Contact" Multiplicity="1" />
           <End Role="Phones" Type="scottModel.Store.Phones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contact">
@@ -62,68 +46,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="scottModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="scottEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="Contacts" EntityType="scottModel.Contact" />
           <EntitySet Name="Phones" EntityType="scottModel.Phone" />
-          <AssociationSet Name="FK_Contact_Contact" Association="scottModel.FK_Contact_Contact">
-            <End Role="Contact" EntitySet="Contacts" />
-            <End Role="Contact1" EntitySet="Contacts" />
-          </AssociationSet>
           <AssociationSet Name="FK_Phones_Contact" Association="scottModel.FK_Phones_Contact">
             <End Role="Contact" EntitySet="Contacts" />
-            <End Role="Phones" EntitySet="Phones" />
+            <End Role="Phone" EntitySet="Phones" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Contact">
           <Key>
             <PropertyRef Name="ContactID" />
           </Key>
-          <Property Name="ContactID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Lastname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Address" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="City" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="State" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="ZipCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Contact1" Relationship="scottModel.FK_Contact_Contact" FromRole="Contact" ToRole="Contact1" />
-          <NavigationProperty Name="Contact2" Relationship="scottModel.FK_Contact_Contact" FromRole="Contact1" ToRole="Contact" />
-          <NavigationProperty Name="Phones" Relationship="scottModel.FK_Phones_Contact" FromRole="Contact" ToRole="Phones" />
+          <Property Type="Int32" Name="ContactID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Lastname" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="State" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ZipCode" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Phones" Relationship="scottModel.FK_Phones_Contact" FromRole="Contact" ToRole="Phone" />
         </EntityType>
         <EntityType Name="Phone">
           <Key>
             <PropertyRef Name="PhoneID" />
           </Key>
-          <Property Name="PhoneID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="ContactID" Type="Int32" />
-          <Property Name="PhoneType" Type="Int32" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Contact" Relationship="scottModel.FK_Phones_Contact" FromRole="Phones" ToRole="Contact" />
+          <Property Type="Int32" Name="PhoneID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ContactID" Nullable="false" />
+          <Property Type="Int32" Name="PhoneType" Nullable="false" />
+          <Property Type="String" Name="PhoneNumber" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contact" Relationship="scottModel.FK_Phones_Contact" FromRole="Phone" ToRole="Contact" />
         </EntityType>
-        <Association Name="FK_Contact_Contact">
-          <End Role="Contact" Type="scottModel.Contact" Multiplicity="1" />
-          <End Role="Contact1" Type="scottModel.Contact" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="ContactID" />
-            </Principal>
-            <Dependent Role="Contact1">
-              <PropertyRef Name="ContactID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Phones_Contact">
-          <End Role="Contact" Type="scottModel.Contact" Multiplicity="0..1" />
-          <End Role="Phones" Type="scottModel.Phone" Multiplicity="*" />
+          <End Type="scottModel.Contact" Role="Contact" Multiplicity="1" />
+          <End Type="scottModel.Phone" Role="Phone" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contact">
               <PropertyRef Name="ContactID" />
             </Principal>
-            <Dependent Role="Phones">
+            <Dependent Role="Phone">
               <PropertyRef Name="ContactID" />
             </Dependent>
           </ReferentialConstraint>
@@ -137,23 +102,23 @@
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="scottModel.Contact">
               <MappingFragment StoreEntitySet="Contact">
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Phones">
             <EntityTypeMapping TypeName="scottModel.Phone">
               <MappingFragment StoreEntitySet="Phones">
-                <ScalarProperty Name="PhoneID" ColumnName="PhoneID" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="PhoneID" ColumnName="PhoneID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
