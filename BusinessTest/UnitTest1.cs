@@ -21,7 +21,7 @@ namespace BusinessTest
 
             ContactManager cm = new ContactManager();
             cm.Insert(mycontact);
-
+            
         }
 
 
@@ -35,6 +35,17 @@ namespace BusinessTest
             PhoneManager pm = new PhoneManager();
             pm.Insert(myPhone);
 
+        }
+
+
+        [TestMethod]
+        public void GetRepo()
+        {
+            ContactManager cm = new ContactManager();
+
+            var myRepo = cm.GetAll();
+            int iCount = myRepo.Count();
+            Assert.IsTrue(iCount>0);
         }
 
 
