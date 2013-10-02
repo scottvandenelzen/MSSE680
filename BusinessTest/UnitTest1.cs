@@ -9,6 +9,9 @@ namespace BusinessTest
     [TestClass]
     public class UnitTest1
     {
+        /// <summary>
+        /// use the contact manager to add a record
+        /// </summary>
         [TestMethod]
         public void AddContact()
         {
@@ -25,6 +28,9 @@ namespace BusinessTest
         }
 
 
+        /// <summary>
+        ///  use the phone manager to add a record
+        /// </summary>
         [TestMethod]
         public void AddPhone()
         {
@@ -34,10 +40,12 @@ namespace BusinessTest
 
             PhoneManager pm = new PhoneManager();
             pm.Insert(myPhone);
-
         }
 
 
+        /// <summary>
+        /// get the contact repo
+        /// </summary>
         [TestMethod]
         public void GetRepo()
         {
