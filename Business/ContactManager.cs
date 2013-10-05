@@ -31,7 +31,16 @@ namespace Business
         public IQueryable<Contact> GetAll()
         {
             var contactRepo = Service.RepositoryFactory.Create("Contact");
+
             return (contactRepo.GetAll().OfType<Contact>());
+        }
+
+        public void test()
+        {
+            var contactRepo = Service.RepositoryFactory.Create("Contact");
+
+            var phoneRepo = Service.RepositoryFactory.Create("Phone");
+
         }
 
         public IQueryable<Contact> GetByLastName(string lastName)

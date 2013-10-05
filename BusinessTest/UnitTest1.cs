@@ -56,6 +56,23 @@ namespace BusinessTest
             Assert.IsTrue(iCount>0);
         }
 
+        [TestMethod]
+        public void IsRepoFull()
+        {
+
+            ContactManager cm = new ContactManager();
+            PhoneManager pm = new PhoneManager();
+
+            var myContacts = cm.GetAll();
+            var myPhones = pm.GetAll();
+
+            var myQuery = from c in myContacts
+                          join p in myPhones on c.ContactID equals p.ContactID
+                          select new {c, p};
+            var joinedResults = myQuery.AsQueryable();
+
+        }
+
 
     }
 }
