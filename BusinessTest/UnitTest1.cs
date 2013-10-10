@@ -81,9 +81,12 @@ namespace BusinessTest
         [TestMethod]
         public void TestValidateCreditCard()
         {
-            Business.ValidateCreditCard oValidator = new Business.ValidateCreditCard(12345, DateTime.Now, 1234);
-            Assert.IsFalse(oValidator.Succeeded);
 
+            Business.ValidateCreditCard oNo7Validator = new Business.ValidateCreditCard(12345, DateTime.Now, 1234);
+            Assert.IsFalse(oNo7Validator.Succeeded);
+
+            Business.ValidateCreditCard oLucky7Validator = new Business.ValidateCreditCard(123457, DateTime.Now, 1234);
+            Assert.IsTrue(oLucky7Validator.Succeeded);
 
         }
     }

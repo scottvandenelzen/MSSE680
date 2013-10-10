@@ -16,8 +16,11 @@ namespace Service
         public String ValidationMessage { get; set; }
         public Boolean Succeeded { get; set; }
 
-        // contstructor
-        public ValidateCreditcard(int iCardNumber, DateTime dexpirationDate, int iccvnumber)
+        private int CreditCardNumber;
+        private DateTime ExpirationDate;
+        private int CCVNumber;
+
+        private void Validate(int iCardNumber, DateTime dexpirationDate, int iccvnumber)
         {
             if (iCardNumber.ToString().Contains("7"))
             {
@@ -30,6 +33,26 @@ namespace Service
                 ValidationMessage = "Validation Failed";
             }
 
+        }
+
+        /// <summary>
+        /// constructor that calls validate
+        /// </summary>
+        public ValidateCreditcard(int iCardNumber, DateTime dexpirationDate, int iccvnumber)
+        {
+            CreditCardNumber = iCardNumber;
+            ExpirationDate = dexpirationDate;
+            CCVNumber = iccvnumber;
+
+            Validate(iCardNumber, dexpirationDate, iccvnumber);
+        }
+
+        /// <summary>
+        /// empty contstructor
+        /// </summary>
+        public ValidateCreditcard()
+        {
+            
         }
     }
 }

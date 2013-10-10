@@ -7,20 +7,19 @@ using Service;
 
 namespace Business
 {
-    public class ValidateCreditCard
+    /// <summary>
+    /// notice i'm inheriting from my service baseclass 
+    /// </summary>
+    public class ValidateCreditCard : Service.ValidateCreditcard
     {
-        public bool Succeeded;
-        public string ValidationMessage;
 
         /// <summary>
-        /// create a credit card validator object and call validate
+        /// uses the constructor in the base class to create a ValidCreditCard object and call it's Validate() method
         /// </summary>
-        public ValidateCreditCard(int iCardNumber, DateTime dexpirationDate, int iccvnumber)
+        public ValidateCreditCard(int iCardNumber, DateTime dexpirationDate, int iccvnumber) : base(iCardNumber, dexpirationDate, iccvnumber)
         {
-            Service.ValidateCreditcard oCreditcard = new ValidateCreditcard(iCardNumber, dexpirationDate, iccvnumber);
-            Succeeded = oCreditcard.Succeeded;
-            ValidationMessage = oCreditcard.ValidationMessage;
         }
+    
 
     }
 }
