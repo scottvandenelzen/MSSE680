@@ -55,24 +55,36 @@ namespace BusinessTest
             int iCount = myRepo.Count();
             Assert.IsTrue(iCount>0);
         }
-
+        
         [TestMethod]
-        public void IsRepoFull()
+        public void TestJoin()
         {
-
             ContactManager cm = new ContactManager();
             PhoneManager pm = new PhoneManager();
 
             var myContacts = cm.GetAll();
             var myPhones = pm.GetAll();
 
-            var myQuery = from c in myContacts
-                          join p in myPhones on c.ContactID equals p.ContactID
-                          select new {c, p};
-            var joinedResults = myQuery.AsQueryable();
+            var myjoin = (from x in myContacts
+                          join y in myPhones on x.ContactID equals y.ContactID
+                          select new {x.FirstName, x.Lastname, y.PhoneNumber}).AsQueryable();
+        }
+  
 
+        [TestMethod]
+        public void TestAddContact()
+        {
+            CreateContactBL.CreateContact("Michelle","Boucher","2255 Oakwood Lane","Green Bay","WI","54301","(920)499-5555","(920)555-1234","");
         }
 
 
+        [TestMethod]
+        public void TestValidateCreditCard()
+        {
+            Business.ValidateCreditCard oValidator = new Business.ValidateCreditCard(12345, DateTime.Now, 1234);
+            Assert.IsFalse(oValidator.Succeeded);
+
+
+        }
     }
 }

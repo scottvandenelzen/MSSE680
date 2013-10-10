@@ -44,6 +44,16 @@ namespace ServiceUnitTest
             var oCC = new ValidateCreditcard(5551212, DateTime.Now, 333);
             Assert.IsFalse(oCC.Succeeded);
         }
+        
+        /// <summary>
+        /// new unit test to verify my createContactService is working 
+        /// </summary>
+        [TestMethod]
+        public void TryCreateContact()
+        {
+            ServiceUtilities.CreateContactWithPhones("Fred", "Flinstone", "123 Rocky Way", "BedRock", "AK", "55555", "555-1212",
+                                    "555-1222", "555-2222");
+        }
 
     }
 }

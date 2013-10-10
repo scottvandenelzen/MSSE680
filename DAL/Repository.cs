@@ -24,15 +24,18 @@ namespace DAL
         /// <summary>
         /// Data Context object to interact with the db
         /// </summary>
-        readonly DbContext _dataContext;
+        DbContext _dataContext;
 
         /// <summary>
         /// Public constructor
         /// </summary>
-        public DataRepository()
+        public DataRepository(DbContext myContext)
         {
+            _dataContext = myContext;
+
             //instantiate the datacontext by reading the connection string
-            _dataContext = new DbContext(ConfigurationManager.ConnectionStrings["scottEntities"].ConnectionString);
+//            _dataContext = new DbContext(ConfigurationManager.ConnectionStrings["scottEntities"].ConnectionString);
+
 
         }
         /// <summary>

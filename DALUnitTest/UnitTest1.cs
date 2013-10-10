@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DAL;
 using System.Data;
@@ -11,13 +13,17 @@ namespace DALUnitTest
     [TestClass]
     public class UnitTest1
     {
+        // setup a context and pass it in
+        DbContext myContext = new DbContext(ConfigurationManager.ConnectionStrings["scottEntities"].ConnectionString);
+
+        
         /// <summary>
         /// unit test inserting using a repository
         /// </summary>
         [TestMethod]
         public void InsertUsingRepository()
         {
-            var contactRepo = new DataRepository<Contact>();
+            var contactRepo = new DataRepository<Contact>(myContext);
 
             Contact myContact = new Contact();
             myContact.FirstName = "John";
@@ -36,7 +42,8 @@ namespace DALUnitTest
         [TestMethod]
         public void InsertPhoneUsingRepository()
         {
-            var phoneRepo = new DataRepository<Phone>();
+
+            var phoneRepo = new DataRepository<Phone>(myContext);
 
             Phone myphone = new Phone();
             myphone.ContactID = 1;
@@ -53,7 +60,7 @@ namespace DALUnitTest
         [TestMethod]
         public void RetrieveUsingRepository()
         {
-            var contactRepo = new DataRepository<Contact>();
+            var contactRepo = new DataRepository<Contact>(myContext);
 
             List<Contact> myList = contactRepo.GetAll().ToList<Contact>();
             Assert.IsTrue(myList.Count > 0);
@@ -66,17 +73,18 @@ namespace DALUnitTest
         public void UpdateRepository()
         {
             // load the list
-            var contactRepo = new DataRepository<Contact>();
+            var contactRepo = new DataRepository<Contact>(myContext);
             List<Contact> myList = contactRepo.GetAll().ToList<Contact>();
 
             // make a change and write it out
             myList[0].FirstName = "Benjamin";
             contactRepo.Update(myList[0]);
 
-            // reload the list after hte update
-            myList = contactRepo.GetAll().ToList<Contact>();
+            List<Contact> TestList = new List<Contact>();
+            TestList = contactRepo.GetBySpecificKey("FirstName", "Benjamin").ToList<Contact>();
+            Assert.IsTrue(TestList.Count>0);
 
-            Assert.AreEqual(myList[0].FirstName,"Benjamin");
+            Assert.AreEqual(TestList[0].FirstName, "Benjamin");
 
 
         }
@@ -86,10 +94,10 @@ namespace DALUnitTest
         public void DeleteAllPeopleNamedScott()
         {
             // load the list of everyone named scott
-            var contactRepo = new DataRepository<Contact>();
+            var contactRepo = new DataRepository<Contact>(myContext);
             List<Contact> myList = contactRepo.GetBySpecificKey("FirstName","Scott").ToList<Contact>();
 
-            var PhoneRepo = new DataRepository<Phone>();
+            var PhoneRepo = new DataRepository<Phone>(myContext);
 
             // delete all the records in this list
             for (int i = 0; i < myList.Count; ++i)
